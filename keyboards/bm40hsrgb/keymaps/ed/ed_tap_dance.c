@@ -26,10 +26,13 @@ static tap etap_state = {
 
 void td_ctl_ent_finished(qk_tap_dance_state_t *state, void *user_data)
 {
+    qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
+    uint16_t keycode = pair->kc1;
+
     etap_state.state = cur_dance(state);
     switch (etap_state.state) {
         case SINGLE_TAP: register_code(KC_ENT); break;
-        case SINGLE_HOLD: register_code(KC_LCTL); break;
+        case SINGLE_HOLD: register_code(keycode); break;
         case DOUBLE_TAP: tap_code(KC_DOT); register_code(KC_ENT); break;
         case DOUBLE_HOLD: register_code(KC_LSFT); tap_code(KC_SLSH); unregister_code(KC_LSFT); register_code(KC_ENT); break;
         case DOUBLE_SINGLE_TAP: tap_code(KC_ENT); register_code(KC_ENT); break;
@@ -38,9 +41,12 @@ void td_ctl_ent_finished(qk_tap_dance_state_t *state, void *user_data)
 
 void td_ctl_ent_reset(qk_tap_dance_state_t *state, void *user_data)
 {
+    qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
+    uint16_t keycode = pair->kc1;
+
     switch (etap_state.state) {
         case SINGLE_TAP: unregister_code(KC_ENT); break;
-        case SINGLE_HOLD: unregister_code(KC_LCTL); break;
+        case SINGLE_HOLD: unregister_code(keycode); break;
         case DOUBLE_TAP:  unregister_code(KC_ENT); break;
         case DOUBLE_HOLD: unregister_code(KC_ENT); break;
         case DOUBLE_SINGLE_TAP: unregister_code(KC_ENT); break;
@@ -118,6 +124,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SFT_CAP] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
     [TD_LSFT_EXTRA] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, td_ls_finished, td_ls_reset, 200),
     [TD_RSFT_EXTRA] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, td_rs_finished, td_rs_reset, 200),
-    [TD_LCTL_ENT_EXTRA] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, td_ctl_ent_finished, td_ctl_ent_reset, 100),
-    [TD_RCTL_ENT_EXTRA] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, td_ctl_ent_finished, td_ctl_ent_reset, 200),
+    [TD_LCTL_ENT_EXTRA] = ACTION_TAP_DANCE_FN_ADVANCED_KEYCODE_TIME(NULL, td_ctl_ent_finished, td_ctl_ent_reset, 100, KC_LCTL),
+    [TD_RCTL_ENT_EXTRA] = ACTION_TAP_DANCE_FN_ADVANCED_KEYCODE_TIME(NULL, td_ctl_ent_finished, td_ctl_ent_reset, 200, KC_RCTL),
 };

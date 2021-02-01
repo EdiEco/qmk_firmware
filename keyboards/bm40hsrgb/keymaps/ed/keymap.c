@@ -256,11 +256,13 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record)
 }
 
 // RGB power control
-void suspend_power_down_user(void) {
+void suspend_power_down_user(void)
+{
     rgb_matrix_set_suspend_state(true);
 }
 
-void suspend_wakeup_init_user(void) {
+void suspend_wakeup_init_user(void)
+{
     rgb_matrix_set_suspend_state(false);
 }
 
