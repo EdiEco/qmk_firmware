@@ -105,7 +105,8 @@ endef
 teensy: $(BUILD_DIR)/$(TARGET).hex check-size cpfirmware
 	$(call EXEC_TEENSY)
 
-DFU_PROGRAMMER ?= dfu-programmer
+DFU_PROGRAMMER ?= /mnt/c/Users/ediec/AppData/Local/QMK/QMK_Toolbox/0.0.21/dfu-programmer.exe
+#dfu-programmer
 GREP ?= grep
 
 
