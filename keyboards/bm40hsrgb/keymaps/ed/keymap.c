@@ -18,7 +18,7 @@
 #include "rgb_matrix.h"
 #include "keyboard.h"
 #include "ed_tap_dance.h"
-
+#include "personal.h"
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record);
 
@@ -149,18 +149,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // Auto layer
-layer_state_t layer_state_set_user(layer_state_t state)
-{
+layer_state_t layer_state_set_user(layer_state_t state) {
     state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
     return state;
 }
 
 
-void rgb_matrix_indicators_user(void)
-{
+void rgb_matrix_indicators_user(void) {
     uint8_t layer = biton32(layer_state);
-    switch (layer)
-    {
+    switch (layer) {
         case _ADJUST:
             rgb_matrix_set_color(0, 200, 0, 0);
             rgb_matrix_set_color(11, 200, 0, 200);
@@ -175,10 +172,8 @@ void rgb_matrix_indicators_user(void)
 }
 
 // Macros
-bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
-    switch (keycode)
-    {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
         case CPP_PNT:
             if (record->event.pressed) SEND_STRING("->"); break;
         case GO_QWERTY:
@@ -207,8 +202,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 // Leader Keys
 LEADER_EXTERNS();
-void matrix_scan_user(void)
-{
+void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
     leader_end();
@@ -221,22 +215,71 @@ void matrix_scan_user(void)
     SEQ_THREE_KEYS(KC_F, KC_F, KC_F) {
       SEND_STRING("NULL");
     }
-    SEQ_ONE_KEY(KC_G) {
-      tap_code(KC_LGUI);
-    }
-    SEQ_ONE_KEY(KC_E) {
-        SEND_STRING("edieco@gmail.com");
-    }
-     SEQ_FOUR_KEYS(KC_R, KC_R, KC_R, KC_R) {
+    SEQ_THREE_KEYS(KC_R, KC_R, KC_R) {
       reset_keyboard();
     }
+    // Personal information, must include "personal.h"
+#ifdef PERSONAL_INFORMATION
+    // Email
+    SEQ_ONE_KEY(KC_E) {
+      SEND_STRING(email);
+    }
+    SEQ_TWO_KEYS(KC_E, KC_C) {
+      SEND_STRING(email_com);
+    }
+    // Name
+    SEQ_ONE_KEY(KC_N) {
+      SEND_STRING(name);
+    }
+    SEQ_TWO_KEYS(KC_N, KC_F) {
+      SEND_STRING(first_name);
+    }
+    SEQ_THREE_KEYS(KC_N, KC_F, KC_F) {
+      SEND_STRING(last_name);
+    }
+    SEQ_TWO_KEYS(KC_N, KC_N) {
+      SEND_STRING(nickname_a);
+    }
+    SEQ_THREE_KEYS(KC_N, KC_N, KC_N) {
+      SEND_STRING(nickname_b);
+    }
+    // Adress
+    SEQ_TWO_KEYS(KC_P,KC_A) {
+      SEND_STRING(address);
+    }
+    SEQ_THREE_KEYS(KC_P, KC_A, KC_A) {
+      SEND_STRING(address_apt);
+    }
+     SEQ_TWO_KEYS(KC_P, KC_N) {
+      SEND_STRING(apt);
+    }
+    SEQ_THREE_KEYS(KC_P, KC_N, KC_N) {
+      SEND_STRING(apt_text);
+    }
+    // Phone
+    SEQ_TWO_KEYS(KC_P, KC_T) {
+      SEND_STRING(phonec);
+    }
+    SEQ_THREE_KEYS(KC_P, KC_T, KC_T) {
+      SEND_STRING(phoneb);
+    }
+    SEQ_FOUR_KEYS(KC_P, KC_T, KC_T, KC_T) {
+      SEND_STRING(phonea);
+    }
+    // Country
+    SEQ_TWO_KEYS(KC_P, KC_C) {
+      SEND_STRING(country);
+    }
+    // Zip
+    SEQ_TWO_KEYS(KC_P, KC_Z) {
+      SEND_STRING(zip);
+    }
+#endif
   }
 }
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
-{
-    switch (keycode)
-    {
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
         case LOW_LFT:
             return 120;
         default:
@@ -244,8 +287,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
     }
 }
 
-bool get_retro_tapping(uint16_t keycode, keyrecord_t *record)
-{
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LOW_LFT:
         case RAI_RGH:
@@ -256,16 +298,16 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record)
 }
 
 // RGB power control
-void suspend_power_down_user(void)
-{
+void suspend_power_down_user(void) {
     rgb_matrix_set_suspend_state(true);
 }
 
-void suspend_wakeup_init_user(void)
-{
+void suspend_wakeup_init_user(void) {
     rgb_matrix_set_suspend_state(false);
 }
 
-
+void shutdown_user(void) {
+    rgb_matrix_set_color_all(200, 0, 0);
+}
 
 

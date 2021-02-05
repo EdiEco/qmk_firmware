@@ -67,6 +67,10 @@ __attribute__((weak)) RGB rgb_matrix_hsv_to_rgb(HSV hsv) { return hsv_to_rgb(hsv
 #    define RGB_DISABLE_TIMEOUT 0
 #endif
 
+#ifndef RGB_DISABLE_MODE
+#    define RGB_DISABLE_MODE 0
+#endif
+
 #ifndef RGB_DISABLE_WHEN_USB_SUSPENDED
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED false
 #endif
@@ -395,7 +399,9 @@ void rgb_matrix_task(void) {
 #endif  // RGB_DISABLE_TIMEOUT > 0
         false;
 
-    uint8_t effect = suspend_backlight || !rgb_matrix_config.enable ? 0 : rgb_matrix_config.mode;
+    uint8_t effect = 0;
+    if(rgb_matrix_config.enable)
+        effect = suspend_backlight ? RGB_DISABLE_MODE : rgb_matrix_config.mode;
 
     switch (rgb_task_state) {
         case STARTING:

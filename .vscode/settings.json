@@ -17,7 +17,12 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "hash_map": "c",
+        "hash_set": "c",
+        "bitset": "c",
+        "chrono": "c",
+        "algorithm": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
