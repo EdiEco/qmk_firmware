@@ -22,7 +22,18 @@
         "hash_set": "c",
         "bitset": "c",
         "chrono": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "*.tcc": "c",
+        "cmath": "c",
+        "random": "c",
+        "istream": "c",
+        "limits": "c",
+        "memory": "c",
+        "numeric": "c",
+        "ostream": "c",
+        "streambuf": "c",
+        "regex": "c",
+        "tuple": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

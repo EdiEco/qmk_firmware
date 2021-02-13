@@ -1,10 +1,12 @@
 RGB_MATRIX_EFFECT(LAYACTIVE)
 RGB_MATRIX_EFFECT(EDBREATH)
+RGB_MATRIX_EFFECT(CYCLE_VAL_UP_DOWN)
 
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
 #include <stdint.h>
 #include "color.h"
+#include "print.h"
 
 static HSV LAYACTIVE_math(HSV hsv, uint16_t offset) {
     hsv.h += qadd8(0, offset);
@@ -16,11 +18,18 @@ bool LAYACTIVE(effect_params_t* params) {
     return effect_runner_reactive(params, &LAYACTIVE_math);
 }
 
+static HSV CYCLE_VAL_UP_DOWN_math(HSV hsv, uint8_t i, uint8_t time) {
+    hsv.v = scale8(abs8(sin8(g_led_config.point[i].y - time) - 128) * 2, 100 );
+    return hsv;
+}
+
+bool CYCLE_VAL_UP_DOWN(effect_params_t* params) { return effect_runner_i(params, &CYCLE_VAL_UP_DOWN_math); }
+
+
 static uint16_t f_timer = 0;
-// Whether we should decrement the heatmap values during the next update.
 static bool animation_active;
 static uint8_t count = 0;
-/// AD Breathing
+
 bool EDBREATH(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 

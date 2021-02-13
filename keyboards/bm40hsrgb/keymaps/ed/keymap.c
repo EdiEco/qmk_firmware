@@ -40,7 +40,7 @@ enum custom_keycodes {
     GO_COLEMAK,
     GO_DVORAK,
     GO_QWEED1,
-    CPP_PNT ,
+    CPP_PNT,
 };
 
 // Tap Dance
@@ -67,12 +67,6 @@ enum custom_keycodes {
 #define NAV_UP  LT(_NAV, KC_UP)
 #define ENG_DOW LT(_ENG, KC_DOWN)
 
-const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
-  {{0, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {11, 0}},
-  {{0, 1}, {6, 1}, {7, 1}, {8, 1}, {9, 1}, {10, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {11, 1}},
-  {{0, 2}, {6, 2}, {7, 2}, {8, 2}, {9, 2}, {10, 2}, {1, 2}, {2, 2}, {3, 2}, {4, 2}, {5, 2}, {11, 2}},
-  {{0, 3}, {1, 3}, {2, 3}, {3, 3}, {4, 3}, {5, 3},  {6, 3}, {7, 3}, {8, 3}, {9, 3}, {10, 3},{11, 3}},
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -87,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ESC_PRI,     KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
     KC_TAB,      KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,
     LSFT_EXTRA,  KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     RSFT_EXTRA,
-    LCTL_ENT_EX, GUI_BSP,     ALT_BSP,     ENG_DOW,     LOW_LFT,     KC_SPC,                   RAI_RGH,     NAV_UP,      SH_T(KC_A),  KC_LEAD,     RCTL_ENT_EX
+    LCTL_ENT_EX, GUI_BSP,     ALT_BSP,     ENG_DOW,     LOW_LFT,     KC_SPC,                   RAI_RGH,     NAV_UP,      _______,     KC_LEAD,     RCTL_ENT_EX
 ),
 
 [_COLEMAK] = LAYOUT_planck_mit(
@@ -120,8 +114,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ENG] = LAYOUT_planck_mit(
     _______,     KC_WH_U,     KC_BTN1,     KC_MS_U,     KC_BTN2,     KC_HOME,     KC_END,      KC_BSPC,     KC_P7,       KC_P8,       KC_P9,       KC_PPLS,
-    _______,     KC_WH_D,     KC_MS_L,     KC_MS_D,     KC_MS_R,     KC_BTN3,     KC_PGUP,     KC_TAB,      KC_P4,       KC_P5,       KC_P6,       KC_PMNS,
-    _______,     KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT,     _______,     KC_PGDN,     KC_NLCK,     KC_P1,       KC_P2,       KC_P3,       KC_PENT,
+    KC_VOLU,     KC_WH_D,     KC_MS_L,     KC_MS_D,     KC_MS_R,     KC_BTN3,     KC_PGUP,     KC_TAB,      KC_P4,       KC_P5,       KC_P6,       KC_PMNS,
+    KC_VOLD,     KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT,     _______,     KC_PGDN,     KC_NLCK,     KC_P1,       KC_P2,       KC_P3,       KC_PENT,
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     KC_P0,       KC_PDOT,     KC_PAST,     KC_PSLS
 ),
 
@@ -129,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,     KC_MS_L,     KC_MS_D,     KC_MS_U,     KC_MS_R,     KC_BTN1,     KC_WH_U,     KC_MS_L,     KC_MS_D,     KC_MS_U,     KC_MS_R,     _______,
     _______,     KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT,     KC_BTN2,     KC_WH_D,     KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT,     _______,
     _______,     KC_HOME,     KC_PGDN,     KC_PGUP,     KC_END,      KC_BTN3,     _______,     KC_HOME,     KC_PGDN,     KC_PGUP,     KC_END,      _______,
-    _______,     _______,     _______,     _______,     _______,     _______,                  _______,     _______,      _______,     _______,     _______
+    _______,     _______,     _______,     _______,     _______,     _______,                  _______,     _______,     _______,     _______,     _______
 ),
 
 
@@ -257,10 +251,10 @@ void matrix_scan_user(void) {
       SEND_STRING(address_apt);
     }
      SEQ_TWO_KEYS(KC_P, KC_N) {
-      SEND_STRING(apt);
+      SEND_STRING(apt_text);
     }
     SEQ_THREE_KEYS(KC_P, KC_N, KC_N) {
-      SEND_STRING(apt_text);
+      SEND_STRING(apt);
     }
     // Phone
     SEQ_TWO_KEYS(KC_P, KC_T) {
@@ -273,8 +267,19 @@ void matrix_scan_user(void) {
       SEND_STRING(phonea);
     }
     // Country
+    SEQ_THREE_KEYS(KC_P, KC_C, KC_C) {
+      SEND_STRING(country);
+    }
+    // City
     SEQ_TWO_KEYS(KC_P, KC_C) {
       SEND_STRING(country);
+    }
+    // Province
+    SEQ_TWO_KEYS(KC_P, KC_P) {
+      SEND_STRING(province);
+    }
+    SEQ_THREE_KEYS(KC_P, KC_P, KC_P) {
+      SEND_STRING(province);
     }
     // Zip
     SEQ_TWO_KEYS(KC_P, KC_Z) {
@@ -317,3 +322,12 @@ void shutdown_user(void) {
 }
 
 
+/*
+const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
+  {{0, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {11, 0}},
+  {{0, 1}, {6, 1}, {7, 1}, {8, 1}, {9, 1}, {10, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {11, 1}},
+  {{0, 2}, {6, 2}, {7, 2}, {8, 2}, {9, 2}, {10, 2}, {1, 2}, {2, 2}, {3, 2}, {4, 2}, {5, 2}, {11, 2}},
+  {{0, 3}, {1, 3}, {2, 3}, {3, 3}, {4, 3}, {5, 3},  {6, 3}, {7, 3}, {8, 3}, {9, 3}, {10, 3},{11, 3}},
+};
+SH_T(KC_A)
+*/
