@@ -17,16 +17,17 @@
 #include "color.h"
 #include "rgb_matrix.h"
 #include "keyboard.h"
-#include "ed_tap_dance.h"
 #include "personal.h"
+#include "ed_tap_dance.h"
+#include "ed_kript.h"
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record);
 
 enum layers {
+  _QWEED1,
   _QWERTY,
   _COLEMAK,
   _DVORAK,
-  _QWEED1,
   _NAV,          // Navegation layer
   _LOWER,
   _RAISE,
@@ -41,7 +42,9 @@ enum custom_keycodes {
     GO_DVORAK,
     GO_QWEED1,
     CPP_PNT,
+    KRIPT
 };
+
 
 // Tap Dance
 #define ESC_PRI TD(TD_ESC_PNT)
@@ -50,6 +53,9 @@ enum custom_keycodes {
 #define RCTL_ENT_EX TD(TD_RCTL_ENT_EXTRA)
 #define LSFT_EXTRA TD(TD_LSFT_EXTRA)
 #define RSFT_EXTRA TD(TD_RSFT_EXTRA)
+#define LFT_EXTRA TD(TD_DWN_EXTRA)
+#define CIRC_EXTRA TD(TD_CIRC_EXTRA)
+#define TILD_EXTRA TD(TD_TILD_EXTRA)
 
 // Mod-Tap
 #define CTL_ENT MT(MOD_LCTL,KC_ENT)
@@ -61,27 +67,26 @@ enum custom_keycodes {
 
 // Layer
 #define LOW_BSP LT(_LOWER, KC_BSPC)
-#define LOW_LFT LT(_LOWER, KC_LEFT)
-#define RAI_RGH LT(_RAISE, KC_RGHT)
+#define LOW_DWN LT(_LOWER, KC_DOWN)
+#define RAI_UP LT(_RAISE, KC_UP)
 #define NAV_SPC LT(_NAV, KC_SPC)
-#define NAV_UP  LT(_NAV, KC_UP)
+#define NAV_RGH  LT(_NAV, KC_RGHT)
 #define ENG_DOW LT(_ENG, KC_DOWN)
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_planck_mit(
-    ESC_PRI,     KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
+    KC_ESC,      KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
     KC_TAB,      KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,
-    SFT_CAP,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SFT_ENT,
-    LCTL_ENT_EX, KC_LEAD,     ALT_DWN,     TT(_ENG),    LOW_BSP,     KC_SPC,                   MO(_RAISE),  KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT
+    KC_LSFT,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_ENT ,
+    KC_LCTL,     RGB_TOG,     KC_LALT,     KC_LGUI,     MO(_LOWER),  KC_SPC,                   MO(_RAISE),  KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT
 ),
 
 [_QWEED1] = LAYOUT_planck_mit(
     ESC_PRI,     KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
     KC_TAB,      KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,
     LSFT_EXTRA,  KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     RSFT_EXTRA,
-    LCTL_ENT_EX, GUI_BSP,     ALT_BSP,     ENG_DOW,     LOW_LFT,     KC_SPC,                   RAI_RGH,     NAV_UP,      _______,     KC_LEAD,     RCTL_ENT_EX
+    LCTL_ENT_EX, GUI_BSP,     ALT_BSP,     LFT_EXTRA,   LOW_DWN,     KC_SPC,                   RAI_UP,      NAV_RGH,     _______,     KC_LEAD,     RCTL_ENT_EX
 ),
 
 [_COLEMAK] = LAYOUT_planck_mit(
@@ -106,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_RAISE] = LAYOUT_planck_mit(
-    KC_TILD,     KC_EXLM,     KC_AT,       KC_HASH,     KC_DLR,      KC_PERC,     KC_CIRC,     KC_AMPR,     KC_ASTR,     KC_LPRN,     KC_RPRN,     KC_BSPC,
+    TILD_EXTRA,  KC_EXLM,     KC_AT,       KC_HASH,     KC_DLR,      KC_PERC,     CIRC_EXTRA,  KC_AMPR,     KC_ASTR,     KC_LPRN,     KC_RPRN,     KC_BSPC,
     KC_DEL,      KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_UNDS,     KC_PLUS,     KC_LBRC,     KC_RBRC,     KC_BSLS,
     _______,     KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      CPP_PNT,     _______,     _______,     _______,     _______,
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     KC_F13,      KC_F14,      KC_F15,      CTL_F16
@@ -128,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_ADJUST] = LAYOUT_planck_mit(
-    RESET,       _______,     _______,     KC_PSCR,     RGB_MOD,     RGB_HUI,     RGB_HUD,     KC_VOLU,     KC_VOLD,     _______,     GO_QWEED1,   GO_QWERTY,
+    RESET,       _______,     _______,     KC_PSCR,     RGB_MOD,     RGB_HUI,     RGB_HUD,     KC_VOLU,     KC_VOLD,     KRIPT,       GO_QWEED1,   GO_QWERTY,
     DEBUG,       _______,     _______,     KC_CAPS,     RGB_TOG,     RGB_SAI,     RGB_SAD,     KC_MPLY,     KC_MSTP,     _______,     _______,     GO_COLEMAK,
     _______,     _______,     _______,     KC_SLCK,     _______,     RGB_VAI,     RGB_VAD,     KC_MPRV,     KC_MNXT,     _______,     _______,     GO_DVORAK,
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     _______,     _______,     _______,     _______
@@ -148,31 +153,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+void keyboard_post_init_user(void) {
+
+}
+
+
 // Auto layer
 layer_state_t layer_state_set_user(layer_state_t state) {
     state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
     return state;
 }
 
+// Set colors when layer is activate
 
 void rgb_matrix_indicators_user(void) {
-    uint8_t layer = biton32(layer_state);
-    switch (layer) {
-        case _ADJUST:
-            rgb_matrix_set_color(0, 200, 0, 0);
-            rgb_matrix_set_color(11, 200, 0, 200);
-            rgb_matrix_set_color(23, 200, 0, 200);
-            rgb_matrix_set_color(35, 200, 0, 200);
+    //uint8_t layer = biton32(layer_state);
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
 
+        break;
+        case _ADJUST:
+            //rgb_matrix_set_color(0, 200, 0, 0);
+            //rgb_matrix_set_color(11, 200, 0, 200);
+            //rgb_matrix_set_color(23, 200, 0, 200);
+            //rgb_matrix_set_color(35, 200, 0, 200);
             rgb_matrix_set_color(10, 0, 200, 200);
         break;
         default:
+            if(g_kript_mode == KRIPT_ENTER_CODE) rgb_matrix_set_color_all(200, 0, 0);
+            else if(g_kript_mode == KRIPT_SELECT_CYPHER) rgb_matrix_set_color_all(0, 200, 0);
         break;
     }
 }
 
+
+
 // Macros
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
     switch (keycode) {
         case CPP_PNT:
             if (record->event.pressed) SEND_STRING("->"); break;
@@ -186,23 +204,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_single_persistent_default_layer(_COLEMAK);
             }
             return false;
-        case GO_DVORAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_DVORAK);
-            }
-            return false;
         case GO_QWEED1:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWEED1);
             }
             return false;
+        case KRIPT:
+            if (record->event.pressed) {
+                kript_start();
+            }
+            return false;
+        default:
+            if(g_kript_mode != KRIPT_STANDBY)
+                return kript_process(keycode, record);
     }
     return true;
 };
 
-// Leader Keys
+// Leae2020der Keys
 LEADER_EXTERNS();
 void matrix_scan_user(void) {
+
   LEADER_DICTIONARY() {
     leading = false;
     leader_end();
@@ -291,7 +313,7 @@ void matrix_scan_user(void) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LOW_LFT:
+        case LOW_DWN:
             return 120;
         default:
             return TAPPING_TERM;
@@ -300,8 +322,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LOW_LFT:
-        case RAI_RGH:
+        case LOW_DWN:
+        case RAI_UP:
             return true;
         default:
             return false;
@@ -317,9 +339,6 @@ void suspend_wakeup_init_user(void) {
     rgb_matrix_set_suspend_state(false);
 }
 
-void shutdown_user(void) {
-    rgb_matrix_set_color_all(200, 0, 0);
-}
 
 
 /*

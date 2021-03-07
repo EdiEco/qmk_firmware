@@ -245,8 +245,8 @@ enum hid_keyboard_keypad_usage {
     KC_X,
     KC_Y,
     KC_Z,
-    KC_1,
-    KC_2,
+    KC_1,  // Ox1E
+    KC_2,  // Ox1F
     KC_3,  // 0x20
     KC_4,
     KC_5,

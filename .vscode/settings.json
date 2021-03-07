@@ -33,7 +33,11 @@
         "ostream": "c",
         "streambuf": "c",
         "regex": "c",
-        "tuple": "c"
+        "tuple": "c",
+        "cctype": "c",
+        "string": "c",
+        "atomic": "c",
+        "cstdint": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
