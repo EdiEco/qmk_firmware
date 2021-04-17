@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,      KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
     KC_TAB,      KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,
     KC_LSFT,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_ENT ,
-    KC_LCTL,     RGB_TOG,     KC_LALT,     KC_LGUI,     MO(_LOWER),  KC_SPC,                   MO(_RAISE),  KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT
+    KC_LCTL,     KC_LGUI,     KC_LALT,     MO(_ENG),  MO(_LOWER),  KC_SPC,                     MO(_RAISE),  KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT
 ),
 
 [_QWEED1] = LAYOUT_planck_mit(
@@ -118,9 +118,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_ENG] = LAYOUT_planck_mit(
-    _______,     KC_WH_U,     KC_BTN1,     KC_MS_U,     KC_BTN2,     KC_HOME,     KC_END,      KC_BSPC,     KC_P7,       KC_P8,       KC_P9,       KC_PPLS,
-    KC_VOLU,     KC_WH_D,     KC_MS_L,     KC_MS_D,     KC_MS_R,     KC_BTN3,     KC_PGUP,     KC_TAB,      KC_P4,       KC_P5,       KC_P6,       KC_PMNS,
-    KC_VOLD,     KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT,     _______,     KC_PGDN,     KC_NLCK,     KC_P1,       KC_P2,       KC_P3,       KC_PENT,
+    _______,     KC_BTN2,     KC_WH_D,     KC_MS_U,     KC_WH_U,     KC_HOME,     KC_END,      KC_BSPC,     KC_P7,       KC_P8,       KC_P9,       KC_PPLS,
+    _______,     KC_BTN1,     KC_MS_L,     KC_MS_D,     KC_MS_R,     KC_BTN3,     KC_PGUP,     KC_TAB,      KC_P4,       KC_P5,       KC_P6,       KC_PMNS,
+    _______,     KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT,     _______,     KC_PGDN,     KC_NLCK,     KC_P1,       KC_P2,       KC_P3,       KC_PENT,
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     KC_P0,       KC_PDOT,     KC_PAST,     KC_PSLS
 ),
 
@@ -133,14 +133,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_ADJUST] = LAYOUT_planck_mit(
-    RESET,       _______,     _______,     KC_PSCR,     RGB_MOD,     RGB_HUI,     RGB_HUD,     KC_VOLU,     KC_VOLD,     KRIPT,       GO_QWEED1,   GO_QWERTY,
-    DEBUG,       _______,     _______,     KC_CAPS,     RGB_TOG,     RGB_SAI,     RGB_SAD,     KC_MPLY,     KC_MSTP,     _______,     _______,     GO_COLEMAK,
-    _______,     _______,     _______,     KC_SLCK,     _______,     RGB_VAI,     RGB_VAD,     KC_MPRV,     KC_MNXT,     _______,     _______,     GO_DVORAK,
+    RESET,       _______,     _______,     KC_PSCR,     RGB_MOD,     RGB_HUD,     RGB_HUI,     KC_VOLD,     KC_VOLU,     KRIPT,       GO_QWEED1,   GO_QWERTY,
+    DEBUG,       _______,     _______,     KC_CAPS,     RGB_TOG,     RGB_SAD,     RGB_SAI,     KC_MPLY,     KC_MSTP,     _______,     _______,     GO_COLEMAK,
+    _______,     _______,     _______,     KC_SLCK,     _______,     RGB_VAD,     RGB_VAI,     KC_MPRV,     KC_MNXT,     _______,     _______,     GO_DVORAK,
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     _______,     _______,     _______,     _______
 )
 
 /* RGB Grid
- * ,-----------------------------------------------------------------------------------.
+ * ,------------------------------------------p-----------------------------------------.
  * |   0  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |  10  |  11  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |  12  |  13  |  14  |  15  |  16  |  17  |  18  |  19  |  20  |  21  |  22  |  23  |
