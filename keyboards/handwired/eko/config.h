@@ -22,8 +22,8 @@
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0xDAD3
 #define DEVICE_VER      0x0100
-#define MANUFACTURER    GhostSeven
-#define PRODUCT         Bento Macropad Rev. 1
+#define MANUFACTURER    EdiEco
+#define PRODUCT         Eko Macropad
 
 /* key matrix size */
 #define MATRIX_ROWS 2
