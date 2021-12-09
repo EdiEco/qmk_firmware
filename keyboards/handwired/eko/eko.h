@@ -15,7 +15,6 @@
  */
 #pragma once
 
-#include "bento.h"
 #include "quantum.h"
 
 /* This a shortcut to help you visually see your layout.
