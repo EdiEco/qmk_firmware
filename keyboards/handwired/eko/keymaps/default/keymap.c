@@ -180,7 +180,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 #ifdef OLED_ENABLE
-void oled_task_user(void) {
+bool oled_task_user(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
@@ -202,5 +202,6 @@ void oled_task_user(void) {
     oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
     oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
     oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+    return true;
 }
 #endif
