@@ -15,7 +15,7 @@ enum layers {
  // _BLENDER,
   _QWEED1,
   _QWERTY,
- // _COLEMAK,
+ _COLEMAK,
  // _DVORAK,
   _NAV,          // Navegation layer
   _LOWER,
@@ -27,7 +27,7 @@ enum layers {
 // Macros declaratiOns
 enum custom_keycodes {
     GO_QWERTY = SAFE_RANGE,
- //   GO_COLEMAK,
+    GO_COLEMAK,
  //   GO_DVORAK,
     GO_QWEED1,
     CPP_PNT,
@@ -75,24 +75,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_planck_mit(
     KC_ESC,      KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
     KC_TAB,      KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,
-    KC_LSFT,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_ENT ,
-    KC_LCTL,     KC_LGUI,     KC_LALT,     MO(_ENG),  MO(_LOWER),  KC_SPC,                     MO(_RAISE),  KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT
+    KC_LSFT,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_RSFT ,
+    KC_LCTL,     KC_LGUI,     KC_LALT,     MO(_ENG),  MO(_LOWER),  KC_SPC,                     MO(_RAISE),  MO(_NAV),     KC_RALT,    KC_LEAD,     KC_ENT
 ),
 
 [_QWEED1] = LAYOUT_planck_mit(
     ESC_PRI,     KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_BSPC,
     KC_TAB,      KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,
     LSFT_EXTRA,  KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     RSFT_EXTRA,
-//    LCTL_ENT_EX, KC_LGUI,     ALT_BSP,     LFT_EXTRA,   LOW_DWN,     KC_SPC,                   RAI_UP,      NAV_RGH,     _______,     KC_LEAD,     RCTL_ENT_EX
-    LCTL_ENT_EX, KC_LGUI,     ALT_BSP,     MO(_ENG),   MO(_LOWER),     KC_SPC,                 MO(_RAISE),  MO(_NAV),    KC_LALT,     KC_LEAD,     KC_ENT
+    LCTL_ENT_EX, KC_LGUI,     ALT_BSP,     MO(_ENG),    MO(_LOWER),  KC_SPC,                   MO(_RAISE),  MO(_NAV),    KC_LALT,     KC_LEAD,     KC_ENT
 ),
 
-// [_COLEMAK] = LAYOUT_planck_mit(
-//     ESC_PRI,     KC_Q,        KC_W,        KC_F,        KC_P,        KC_G,       KC_J,         KC_L,        KC_U,        KC_Y,        KC_SCLN,     KC_BSPC,
-//     KC_TAB,      KC_A,        KC_R,        KC_S,        KC_T,        KC_D,       KC_H,         KC_N,        KC_E,        KC_I,        KC_O,        KC_QUOT,
-//     SFT_CAP,     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,       KC_K,         KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_ENT ,
-//     LCTL_ENT_EX, KC_LEAD,     ALT_DWN,     TT(_ENG),    LOW_BSP,     KC_SPC,                   MO(_RAISE),  KC_LEFT,     KC_DOWN,     KC_UP,       KC_RGHT
-// ),
+[_COLEMAK] = LAYOUT_planck_mit(
+    ESC_PRI,     KC_Q,        KC_W,        KC_F,        KC_P,        KC_G,       KC_J,         KC_L,        KC_U,        KC_Y,        KC_SCLN,     KC_BSPC,
+    KC_TAB,      KC_A,        KC_R,        KC_S,        KC_T,        KC_D,       KC_H,         KC_N,        KC_E,        KC_I,        KC_O,        KC_QUOT,
+    LSFT_EXTRA,  KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,       KC_K,         KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     RSFT_EXTRA ,
+    LCTL_ENT_EX, KC_LGUI,     ALT_BSP,     MO(_ENG),   MO(_LOWER),     KC_SPC,                 MO(_RAISE),  MO(_NAV),    KC_LALT,     KC_LEAD,     KC_ENT
+),
 
 // [_DVORAK] = LAYOUT_planck_mit(
 //     ESC_PRI,     KC_QUOT,     KC_COMM,     KC_DOT,      KC_P,        KC_Y,       KC_F,         KC_G,        KC_C,        KC_R,        KC_L,        KC_BSPC,
@@ -129,11 +128,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     _______,     _______,     _______,     _______
 ),
 
-
 [_ADJUST] = LAYOUT_planck_mit(
-    RESET,       _______,     KC_ASTG,     KC_PSCR,     RGB_MOD,     RGB_HUD,     RGB_HUI,     KC_VOLD,     KC_VOLU,     KRIPT,       GO_QWEED1,   GO_QWERTY,
-    DEBUG,       _______,     _______,     KC_CAPS,     RGB_TOG,     RGB_SAD,     RGB_SAI,     KC_MPLY,     KC_MSTP,     _______,     _______,     _______, //GO_COLEMAK,
-    _______,     _______,     _______,     KC_SLCK,     _______,     RGB_VAD,     RGB_VAI,     KC_MPRV,     KC_MNXT,     _______,     _______,     _______, //GO_DVORAK,
+    RESET,       _______,     KC_ASTG,     KC_PSCR,     RGB_MOD,     RGB_HUD,     RGB_HUI,     KC_VOLD,     KC_VOLU,     KRIPT,       _______,     GO_QWEED1,
+    DEBUG,       _______,     _______,     KC_CAPS,     RGB_TOG,     RGB_SAD,     RGB_SAI,     KC_MPLY,     KC_MSTP,     _______,     _______,     GO_QWERTY, //GO_COLEMAK,
+    _______,     _______,     _______,     KC_SLCK,     _______,     RGB_VAD,     RGB_VAI,     KC_MPRV,     KC_MNXT,     _______,     _______,     GO_COLEMAK, //GO_DVORAK,
     _______,     _______,     _______,     _______,     _______,     _______,                  _______,     _______,     _______,     _______,     _______
 )
 
@@ -208,16 +206,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
        // case CPP_PNT:
            // if (record->event.pressed) SEND_STRING("->"); break;
         case GO_QWERTY:
+            autoshift_disable();
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);
             }
             return false;
-        // case GO_COLEMAK:
-        //     if (record->event.pressed) {
-        //         set_single_persistent_default_layer(_COLEMAK);
-        //     }
-        //     return false;
+        case GO_COLEMAK:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_COLEMAK);
+            }
+            return false;
         case GO_QWEED1:
+            autoshift_enable();
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWEED1);
             }
