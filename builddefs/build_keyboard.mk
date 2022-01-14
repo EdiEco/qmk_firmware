@@ -17,9 +17,10 @@ include $(BUILDDEFS_PATH)/message.mk
 QMK_BIN ?= qmk
 
 # Set the filename for the final firmware binary
+QMK_VERSION := $(shell git describe --abbrev=6 --dirty --tags --always 2>/dev/null)
 KEYBOARD_FILESAFE := $(subst /,_,$(KEYBOARD))
-TARGET ?= $(KEYBOARD_FILESAFE)_$(KEYMAP)
-KEYBOARD_OUTPUT := $(BUILD_DIR)/obj_$(KEYBOARD_FILESAFE)
+TARGET ?= $(KEYBOARD_FILESAFE)_$(KEYMAP)_$(QMK_VERSION)
+KEYBOARD_OUTPUT := $(BUILD_DIR)/obj_$(KEYBOARD_FILESAFE)_$(QMK_VERSION)
 
 # Force expansion
 TARGET := $(TARGET)

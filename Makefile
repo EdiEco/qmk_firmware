@@ -25,7 +25,7 @@ endif
 
 ifndef SUB_IS_SILENT
 ifndef SKIP_GIT
-    QMK_VERSION := $(shell git describe --abbrev=0 --tags 2>/dev/null)
+    QMK_VERSION := $(shell git describe --abbrev=6 --dirty --tags --always 2>/dev/null)
 endif
 
 ifneq ($(QMK_VERSION),)
