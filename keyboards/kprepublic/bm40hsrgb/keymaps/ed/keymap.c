@@ -2,6 +2,7 @@
 v20211018_1742
  */
 #include QMK_KEYBOARD_H
+#include "raw_hid.h"
 #include "color.h"
 #include "rgb_matrix.h"
 #include "keyboard.h"
@@ -343,4 +344,20 @@ void suspend_wakeup_init_user(void) {
     rgb_matrix_set_suspend_state(false);
 }
 
-
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    switch(data[0]) {
+        case 1:
+            switch(data[1]) {
+                case 1: SEND_STRING("1:1"); break;
+                case 2: SEND_STRING("1:2"); break;
+            }
+            break;
+        case 2:
+            switch(data[1]) {
+                case 1: SEND_STRING("2:1"); break;
+                case 2: SEND_STRING("2:2"); break;
+            }
+            break;
+    }
+    raw_hid_send(data, length);
+};

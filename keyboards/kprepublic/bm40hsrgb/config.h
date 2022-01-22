@@ -23,6 +23,8 @@
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    KPRepublic
 #define PRODUCT         BM40 Hotswap RGB
+#define RAW_USAGE_PAGE  0xFF60
+#define RAW_USAGE_ID    0x61
 
 /* key matrix size */
 #define MATRIX_ROWS 4
