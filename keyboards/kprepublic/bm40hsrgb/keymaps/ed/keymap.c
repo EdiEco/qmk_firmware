@@ -273,11 +273,15 @@ void matrix_scan_user(void) {
     }
     // Adress
     SEQ_TWO_KEYS(KC_P, KC_A) {
+      SEND_STRING(number);
+      SEND_STRING(" ");
       SEND_STRING(address);
     }
+    SEQ_THREE_KEYS(KC_P, KC_A, KC_N) {
+      SEND_STRING(number);
+    }
     SEQ_THREE_KEYS(KC_P, KC_A, KC_A) {
-      SEND_STRING(apt_text);
-      SEND_STRING(apt_number);
+      SEND_STRING(address);
     }
     //SEQ_THREE_KEYS(KC_P, KC_N, KC_N) {
       //SEND_STRING(apt);
